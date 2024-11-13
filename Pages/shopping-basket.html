@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Basket</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <h1>Your Shopping Basket</h1>
+            <a href="../index.html" class="home-icon">🏠</a>
+        </div>
+    </header>
+    
+    <section class="basket-container">
+        <p id="empty-message">Your basket is currently empty.</p>
+        <ul id="basket-items"></ul>
+        
+        <div class="basket-summary">
+            <p id="total-price">Total Price: $0</p>
+            <button onclick="clearBasket()" class="clear-button">Clear Basket</button>
+            <a href="../Pages/checkout.html" onclick="return checkBasket()" class="checkout-button">Proceed to Checkout</a>
+        </div>
+    </section>
+
+    <script src="../js/script.js"></script>
+    <script>
+        function displayBasket() {
+            const basketItems = document.getElementById('basket-items');
+            const totalPriceElem = document.getElementById('total-price');
+            const emptyMessage = document.getElementById('empty-message');
+            
+            let shoppingBasket = JSON.parse(localStorage.getItem('shoppingBasket')) || [];
+
+            if (shoppingBasket.length === 0) {
+                emptyMessage.style.display = 'block';
+                basketItems.style.display = 'none';
+                totalPriceElem.style.display = 'none';
+            } else {
+                emptyMessage.style.display = 'none';
+                basketItems.style.display = 'block';
+                totalPriceElem.style.display = 'block';
+                basketItems.innerHTML = '';
+
+                let total = 0;
+                shoppingBasket.forEach((item, index) => {
+                    const listItem = document.createElement('li');
+                    listItem.className = "basket-item";
+                    listItem.innerHTML = `
+                        <div class="item-details">
+                            <p><strong>${item.name}</strong></p>
+                            <p>$${item.price} x ${item.quantity}</p>
+                        </div>
+                        <div class="item-actions">
+                            <button onclick="increaseQuantity(${index})">+</button>
+                            <button onclick="decreaseQuantity(${index})">-</button>
+                            <button onclick="removeItem(${index})">Remove</button>
+                        </div>
+                    `;
+                    basketItems.appendChild(listItem);
+
+                    total += item.price * item.quantity;
+                });
+
+                totalPriceElem.textContent = `Total Price: L.E${total}`;
+            }
+        }
+
+        function increaseQuantity(index) {
+            let shoppingBasket = JSON.parse(localStorage.getItem('shoppingBasket')) || [];
+            shoppingBasket[index].quantity += 1;
+            localStorage.setItem('shoppingBasket', JSON.stringify(shoppingBasket));
+            displayBasket();
+        }
+
+        function decreaseQuantity(index) {
+            let shoppingBasket = JSON.parse(localStorage.getItem('shoppingBasket')) || [];
+            if (shoppingBasket[index].quantity > 1) {
+                shoppingBasket[index].quantity -= 1;
+            } else {
+                shoppingBasket.splice(index, 1);
+            }
+            localStorage.setItem('shoppingBasket', JSON.stringify(shoppingBasket));
+            displayBasket();
+        }
+
+        function removeItem(index) {
+            let shoppingBasket = JSON.parse(localStorage.getItem('shoppingBasket')) || [];
+            shoppingBasket.splice(index, 1);
+            localStorage.setItem('shoppingBasket', JSON.stringify(shoppingBasket));
+            displayBasket();
+        }
+
+        function clearBasket() {
+            localStorage.removeItem('shoppingBasket');
+            displayBasket();
+        }
+
+        function checkBasket() {
+            let shoppingBasket = JSON.parse(localStorage.getItem('shoppingBasket')) || [];
+            if (shoppingBasket.length === 0) {
+                alert("Your basket is empty. Add items to proceed to checkout!");
+                return false;
+            }
+            return true;
+        }
+
+        displayBasket();
+    </script>
+</body>
+</html>

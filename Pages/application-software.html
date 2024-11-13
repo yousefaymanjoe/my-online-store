@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Software</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Home Icon for Navigation -->
+    <header>
+        <h1>Application Software</h1>
+        <a href="../index.html" class="home-icon">🏠</a>
+        
+         <!-- Basket Shortcut Icon -->
+        
+        </a>
+        <a href="../Pages/shopping-basket.html" class="basket-icon">
+            🛒 <span id="basket-count">0</span>
+        </a>
+
+        
+    </header>
+
+    <!-- Product Grid Section -->
+    <section class="product-grid">
+        <div class="product-card">
+            <img src="../Images/Word.jpg" alt="Word">
+            <h2>Word Product Key</h2>
+            <p>250 L.E</p>
+            <button onclick="addToBasket('Word', 250)">Add to Basket</button>
+        </div>
+        <div class="product-card">
+            <img src="../Images/PowerPoint.png" alt="PowerPoint">
+            <h2>PowerPoint Product Key</h2>
+            <p>350 L.E</p>
+            <button onclick="addToBasket('PowerPoint', 350)">Add to Basket</button>
+        </div>
+        <div class="product-card">
+            <img src="../Images/Excel.png" alt="excel">
+            <h2>Excel Product Key</h2>
+            <p>470 L.E</p>
+            <button onclick="addToBasket('Excel', 470)">Add to Basket</button>
+        </div>
+        <div class="product-card">
+            <img src="../Images/Office.png" alt="Office">
+            <h2>Office Product Key</h2>
+            <p>1000 L.E</p>
+            <button onclick="addToBasket('Office', 1000)">Add to Basket</button>
+        </div>
+        
+    </section>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>
